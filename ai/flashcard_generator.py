@@ -7,26 +7,25 @@ class FlashcardGenerator:
         self.llm = get_llm()
 
     def generate_flashcards(self, text):
-
         prompt = f"""
 You are an educational AI assistant.
 
-Read the following study material.
+Read the study material and generate exactly 10 flashcards.
 
-Generate 10 flashcards.
+Return ONLY valid JSON.
 
-Rules:
+Format:
 
-1. Each flashcard should have:
-
-Front:
-<Question>
-
-Back:
-<Answer>
-
-2. Keep answers concise.
-3. Use only information from the text.
+[
+  {{
+    "question": "What is Software Engineering?",
+    "answer": "Software Engineering is the application of engineering principles to the design, development, and maintenance of software."
+  }},
+  {{
+    "question": "...",
+    "answer": "..."
+  }}
+]
 
 Study Material:
 

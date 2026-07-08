@@ -16,3 +16,4 @@ sqlalchemy
 pandas
 
 pydantic
+python-docx 

@@ -6,30 +6,37 @@ class QuizGenerator:
     def __init__(self):
         self.llm = get_llm()
 
-    def generate_quiz(self, text):
+
+    def generate_quiz(self, text, difficulty, quiz_type):
 
         prompt = f"""
-You are an educational AI assistant.
+You are an AI Educational Assistant.
 
-Read the following study material carefully.
+Study the following text carefully.
 
-Generate:
+Generate a {difficulty} level quiz.
+Quiz Type:
+{quiz_type}
 
-1. Five Multiple Choice Questions (MCQs)
-   - Each question should have four options (A, B, C, D)
-   - Mention the correct answer.
+Rules:
 
-2. Three True/False Questions
-   - Mention whether the answer is True or False.
+If quiz type is MCQ:
+- Generate 5 multiple choice questions
+- Four options (A, B, C, D)
+- Mention the correct answer
 
-3. Two Short Answer Questions
-   - Provide a brief answer.
+If quiz type is True/False:
+- Generate 5 statements
+- Mention True or False
+
+If quiz type is Fill in the Blanks:
+- Generate 5 fill in the blanks
+- Mention the correct answer
 
 Study Material:
 
 {text}
 """
-
         response = self.llm.invoke(prompt)
 
         return response.content
