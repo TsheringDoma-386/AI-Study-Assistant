@@ -7,6 +7,7 @@ from ai import quiz_generator
 from processings.docx_reader import DOCXReader
 from processings.pdf_reader import PDFReader
 from processings.txt_reader import TXTReader
+from database.models import get_latest_progress
 
 st.title("AI Study Assistant")
 
@@ -51,4 +52,69 @@ quiz =quiz_generator.generate_quiz(
     chunks[0],
     difficulty,
     quiz_type
+)
+import streamlit as st
+
+if "flashcards" not in st.session_state:
+    st.session_state.flashcards = []
+
+if "current_card" not in st.session_state:
+    st.session_state.current_card = 0
+
+    card = st.session_state.flashcards[st.session_state.current_card]
+
+st.subheader("Flashcard")
+
+st.write("### Question")
+st.write(card["question"])
+
+if st.button("Show Answer"):
+    st.write("### Answer")
+    st.write(card["answer"])
+
+    col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("Previous") and st.session_state.current_card > 0:
+        st.session_state.current_card -= 1
+
+with col2:
+    if (
+        st.button("Next")
+        and st.session_state.current_card < len(st.session_state.flashcards) - 1
+    ):
+        st.session_state.current_card += 1
+
+        st.subheader("📊 Study Progress")
+
+progress = get_latest_progress()
+
+if progress:
+
+    docs, quizzes, flashcards, last = progress
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric("Documents", docs)
+
+    with col2:
+        st.metric("Quizzes", quizzes)
+
+    with col3:
+        st.metric("Flashcards", flashcards)
+
+    st.write(f"**Last Activity:** {last}")
+
+else:
+    st.info("No study progress available.")
+
+    from datetime import datetime
+from database.models import save_progress
+
+save_progress(
+    documents=1,
+    quizzes=1,
+    flashcards=10,
+    date=str(datetime.now())
 )

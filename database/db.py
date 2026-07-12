@@ -21,5 +21,15 @@ def create_tables():
     )
     """)
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS study_progress(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        documents_uploaded INTEGER,
+        quizzes_generated INTEGER,
+        flashcards_generated INTEGER,
+        last_activity TEXT
+    )
+    """)
+
     conn.commit()
     conn.close()

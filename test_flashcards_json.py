@@ -10,7 +10,7 @@ cleaner = TextCleaner()
 chunker = Chunker()
 generator = FlashcardGenerator()
 
-text = reader.extract_text("uploads/software engineering.pdf")
+text = reader.extract_text("upload/software engineering.pdf")
 clean_text = cleaner.clean(text)
 chunks = chunker.split(clean_text)
 
