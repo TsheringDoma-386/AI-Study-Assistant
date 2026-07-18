@@ -1,3 +1,4 @@
+
 import sqlite3
 
 DATABASE_NAME = "study_materials.db"
@@ -30,6 +31,33 @@ def create_tables():
         last_activity TEXT
     )
     """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS study_schedule(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        subject TEXT,
+        difficulty TEXT,
+        study_hours INTEGER
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS study_plans(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        subject TEXT,
+        exam_date TEXT,
+        difficulty TEXT,
+        hours_per_day INTEGER,
+        study_plan TEXT
+    )
+    """)
+    cursor.execute("""
+CREATE TABLE IF NOT EXISTS recommendations(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    subject TEXT,
+    recommendation TEXT
+)
+""")
 
     conn.commit()
     conn.close()
